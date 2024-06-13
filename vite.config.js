@@ -6,14 +6,14 @@ export default defineConfig({
   plugins: [react()],
   base: "/short-url/",
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-        },
-      },
-    },
+	rollupOptions: {
+	  output: {
+		manualChunks(id) {
+		  if (id.includes("node_modules")) {
+			return "vendor";
+		  }
+		},
+	  },
+	},
   },
 })
