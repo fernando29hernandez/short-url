@@ -2,17 +2,21 @@ import "./App.css";
 import { React, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SHORT_URL_API = `https://smolurl.com/api/links`;
 const Form = () => {
 	const [shortenedLink, setShortenedLink] = useState("");
 	const [userInput, setUserInput] = useState("");
 
+	const notify = (message) => toast.info(message);
+
 	const fetchData = async () => {
 		try {
 			const headers = { headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } }
 			if (userInput === '' || !userInput.trim()) {
-				setShortenedLink("Set a link with valid format.")
+				notify("Set a link with valid format.")
 				return
 			}
 			const { data } = await axios.post(
@@ -23,7 +27,7 @@ const Form = () => {
 			);
 			setShortenedLink(data.data.short_url);
 		} catch (e) {
-			setShortenedLink("Set a link with valid format.")
+			notify("Set a link with valid format.")
 
 		}
 	};
@@ -31,6 +35,7 @@ const Form = () => {
 	return (
 
 		<div className="flex flex-1 flex-row min-h-screen justify-center items-center w-full">
+			<ToastContainer position="bottom-right" theme="dark"/>
 			<div className=" text-center md:w-[700px] sm:w-full">
 				<h1 className=" text-2xl font-medium text-blue-500 mb-4">
 					<span className=" text-blue-400">URL Shortener</span>
@@ -61,17 +66,18 @@ const Form = () => {
 
 						<CopyToClipboard text={shortenedLink} onCopy={(text) => {
 							if (!text.trim()) {
-								setShortenedLink("Nothing is copied.")
+								notify("Nothing is copied.")
 								return
 							}
 							if (text.includes("Set a link with valid format")) {
-								setShortenedLink("Nothing is copied.")
+								notify("Nothing is copied.")
 								return
 							}
 							if (text.includes("Nothing is copied.")) {
-								setShortenedLink("Nothing is copied.")
+								notify("Nothing is copied.")
 								return
 							}
+							notify("URL Copied.")
 						}}>
 							<button className="border-2 border-blue-500 text-blue-500 font-medium px-8  py-2  rounded-md  md:basis-6/12 sm:basis-full">
 								Copy URL to Clipboard
