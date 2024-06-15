@@ -25,7 +25,7 @@ Url Shortener is an app that i wanted to develop at least the frontend side usin
 
 ## Screenshots
 
-<img src="src/assets/screenshot.png" width="80%">
+<img src="[src/assets/screenshot.png](https://github.com/fernando29hernandez/short-url/blob/main/src/assets/screenshot.PNG)" width="80%">
 
 
 
